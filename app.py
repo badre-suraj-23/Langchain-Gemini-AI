@@ -1,9 +1,32 @@
 import streamlit as st
 import os
 from dotenv import load_dotenv
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_google_genai import ChatGoogleGenerative
+conn = psycopg2.connect(DATABASE_URL)  # PAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
+# database connection
+import os
+import psycopg2
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+# Fetch database URL from environment
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL is missing! Please check your .env file.")
+
+# Establish database connection
+conn = psycopg2.connect(DATABASE_URL)
+cursor = conn.cursor()
+cursor.execute("SELECT NOW();")  
+print(cursor.fetchone())
+cursor.close()
+conn.close()
+
+
 
 # Load environment variables
 load_dotenv()
