@@ -159,7 +159,7 @@ header_col1, header_col2 = st.columns([4, 1])
 with header_col1:
     st.title("💬 AI Chat Assistant 🤖 ")
     st.title("🔍 Langchin + Gemini AI ")
-    st.caption("🚀 Powered by Google Gemini 🌐 | Created by [Suraj Badre 🙏 ](https://github.com/badre-suraj-)")
+    st.caption("🚀 Powered by Google Gemini 🌐 | Created by [Suraj Badre 🙏 ](https://github.com/badre-suraj-23)")
 
     # st.caption(" Powered by Google Gemini [Created by suraj badre]")
     
