@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
 
-# conn = psycopg2.connect(DATABASE_URL)  # PAI
+# conn = psycopg2.connect(DATABASE_URL)  # API
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 # database connection
