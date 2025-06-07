@@ -1,6 +1,6 @@
 #--------------------------------- 𝗔𝗜 𝗖𝗵𝗮𝘁 𝗔𝘀𝘀𝗶𝘀𝘁𝗮𝗻𝘁 🤖-----------------------------------------------------✨
 
-Welcome to the AI Chat Assistant powered by *LangChain + Google Gemini AI*! This project combines cutting-edge AI capabilities with modern web technologies to deliver an interactive chatbot experience. Built with Streamlit, PostgreSQL, and LangChain, deployed on Render.
+Welcome to the AI Chat Assistant powered by *LangChain + Google Gemini AI*! This project combines cutting-edge AI capabilities with modern web technologies to deliver an interactive chatbot experience. Built with Streamlit, PostgreSQL, and LangChain, deployed on Render..
 
 [![Deployed on Render](https://img.shields.io/badge/Deployed%20on-Render-%2300B4B6?style=flat)](https://render.com)
 
