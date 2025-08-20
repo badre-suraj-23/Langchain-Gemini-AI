@@ -1,29 +1,21 @@
 import streamlit as st
 import os
-import requests
 from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
-# ----------------- API CONFIG -----------------
-API_BASE = "https://blogmedia.onrender.com/api"
-
+# ----------------- DEMO LOGIN/REGISTER -----------------
 def login(email, password):
-    url = f"{API_BASE}/login/"
-    r = requests.post(url, data={"email": email, "password": password})
-    if r.status_code == 200:
-        return r.json().get("access")
-    return None
+    # Demo: bina API ke login
+    return "demo_token"
 
 def register(username, email, password):
-    url = f"{API_BASE}/register/"
-    r = requests.post(url, data={
-        "username": username,
-        "email": email,
-        "password": password
-    })
-    return r
+    # Demo: bina API ke registration
+    class DummyResponse:
+        status_code = 201
+        text = "Account created"
+    return DummyResponse()
 
 # ----------------- SESSION INIT -----------------
 if "messages" not in st.session_state:
@@ -100,67 +92,29 @@ apply_theme()
 # ----------------- LOGIN / REGISTER -----------------
 if st.session_state.token is None:
     if st.session_state.page == "login":
-        st.markdown("""
-        <div style="
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 30px;
-            background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            color: #ffffff;
-        ">
-        <h2 style='text-align:center;'>🔐 Login</h2>
-        <p style='text-align:center;font-size:14px;'>Enter your credentials to access the assistant</p>
-        </div>
-        """, unsafe_allow_html=True)
-
-        email = st.text_input("Email", key="login_email", placeholder="Enter your email")
-        password = st.text_input("Password", type="password", key="login_pass", placeholder="Enter your password")
-
-        if st.button("Login", key="login_btn"):
-            token = login(email, password)
-            if token:
-                st.session_state.token = token
-                st.success("✅ Login successful!")
-                st.rerun()
-            else:
-                st.error("❌ Invalid credentials")
-
-        if st.button("Go to Register", key="to_register"):
+        st.markdown("<h2 style='text-align:center;'>🔐  Login</h2>", unsafe_allow_html=True)
+        email = st.text_input("Email", key="login_email")
+        password = st.text_input("Password", type="password", key="login_pass")
+        if st.button("Login"):
+            st.session_state.token = login(email, password)
+            st.success("✅ Demo Login successful!")
+            st.session_state.page = "main"
+            st.rerun()
+        if st.button("Go to Register"):
             st.session_state.page = "register"
             st.rerun()
-
     elif st.session_state.page == "register":
-        st.markdown("""
-        <div style="
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 30px;
-            background: linear-gradient(135deg, #fddb92 0%, #d1fdff 100%);
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            color: #333333;
-        ">
-        <h2 style='text-align:center;'>📝 Register</h2>
-        <p style='text-align:center;font-size:14px;'>Create a new account to start chatting</p>
-        </div>
-        """, unsafe_allow_html=True)
-
-        username = st.text_input("Username", key="reg_user", placeholder="Choose a username")
-        email = st.text_input("Email", key="reg_email", placeholder="Enter your email")
-        password = st.text_input("Password", type="password", key="reg_pass", placeholder="Enter a password")
-
-        if st.button("Register", key="register_btn"):
+        st.markdown("<h2 style='text-align:center;'>📝  Register</h2>", unsafe_allow_html=True)
+        username = st.text_input("Username", key="reg_user")
+        email = st.text_input("Email", key="reg_email")
+        password = st.text_input("Password", type="password", key="reg_pass")
+        if st.button("Register"):
             res = register(username, email, password)
             if res.status_code == 201:
-                st.success("🎉 Account created! Please login.")
+                st.success("🎉 Demo Account created! Please login.")
                 st.session_state.page = "login"
                 st.rerun()
-            else:
-                st.error(f"Registration failed: {res.text}")
-
-        if st.button("Back to Login", key="back_login"):
+        if st.button("Back to Login"):
             st.session_state.page = "login"
             st.rerun()
 
@@ -170,12 +124,12 @@ else:
     header_col1, header_col2 = st.columns([4, 1])
     with header_col1:
         st.title("💬 GenAI Assistant 🤖")
-        st.caption("🚀 Powered by Google Gemini 🌐 | Created by [Suraj Badre 🙏](https://github.com/badre-suraj-23)")
+        st.caption("🚀 Powered by Google Gemini 🌐 | Demo Version")
     with header_col2:
         st.markdown("""
         <div style="text-align: right; margin-top: 15px;">
-            <a href="https://www.linkedin.com/in/suraj-badre/" target="_blank">
-                <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">
+            <a href="#" target="_blank">
+                <img src="https://img.shields.io/badge/Demo-0077B5?style=for-the-badge" alt="Demo">
             </a>
         </div>
         """, unsafe_allow_html=True)
@@ -195,9 +149,9 @@ else:
     # Input
     col1, col2 = st.columns([6, 1])
     with col1:
-        prompt = st.text_input("Type your message here...", label_visibility="collapsed", key="input_field", placeholder="Ask me anything")
+        prompt = st.text_input("Type your message here...", key="input_field")
     with col2:
-        generate = st.button("Generate", key="generate_btn")
+        generate = st.button("Generate")
 
     if generate and prompt:
         st.session_state.messages.append({"role": "user", "content": prompt})
@@ -209,7 +163,6 @@ else:
                 st.markdown(f'<div class="message assistant-message">{response}</div>', unsafe_allow_html=True)
         st.session_state.messages.append({"role": "assistant", "content": response})
 
-    # ✅ Clear input field after generating response
     # Sidebar controls
     with st.sidebar:
         st.header("⚙️ Controls")
@@ -221,7 +174,7 @@ else:
             st.rerun()
         st.divider()
         st.subheader("💡 Example Questions")
-        for example in ["Explain quantum computing in simple terms", "How do I make a HTTP request in Python?", "What's the difference between AI and ML?", "Suggest healthy breakfast ideas"]:
+        for example in ["Explain quantum computing", "How do I make a HTTP request in Python?", "Difference between AI and ML", "Suggest healthy breakfast ideas"]:
             if st.button(example, use_container_width=True):
                 st.session_state.messages.append({"role": "user", "content": example})
                 st.rerun()
